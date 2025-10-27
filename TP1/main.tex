@@ -48,10 +48,30 @@ Show that there exists $\lambda_{\max}$ such that the minimizer of~\eqref{eq:las
 \end{exercise}
 
 \begin{solution}  % ANSWER HERE
+    We denote by \( F_\lambda(\beta) \) the Lasso objective.  
+    For every \( \beta \),
+    \begin{equation}
+    \begin{aligned}
+    F_\lambda(\beta) - F_\lambda(0)
+    &= \frac{1}{2}\|y - X\beta\|_2^2 + \lambda \|\beta\|_1 - \frac{1}{2}\|y\|_2^2 \\[6pt]
+    &= -\,y^\top X\beta + \frac{1}{2}\|X\beta\|_2^2 + \lambda \|\beta\|_1.
+    \end{aligned}
+    \end{equation}
 
-\begin{equation}
-    \lambda_{\max} = \dots
-\end{equation}
+    Or, using Hölder's inequality,
+    \begin{equation}
+        |y^\top X\beta| \;\leq\; \|X^\top y\|_\infty \, \|\beta\|_1.
+    \end{equation}
+
+    Hence,
+    \begin{equation}
+        F_\lambda(\beta) - F_\lambda(0)
+        \;\geq\;
+        \left( \lambda - \|X^\top y\|_\infty \right) \|\beta\|_1
+        + \frac{1}{2}\|X\beta\|_2^2.
+    \end{equation}
+
+By noting that \(\lambda_{\max} = \|X^\top y\|_\infty\), we can conclude that for all \(\lambda \geq \lambda_{\max}\), the unique minimizer is \(\beta = 0\).
 
 \end{solution}
 
@@ -73,9 +93,27 @@ Show that
 
 \begin{solution}  % ANSWER HERE
 
+For a fixed dictionnary the problem becomes
+
 \begin{equation}
-    \lambda_{\max} = \dots
+\min_{(\mathbf{z}_k)_k \\ \norm{\mathbf{d}_k}_2^2\leq 1} \quad\norm{\mathbf{x} - \sum_{k=1}^K \mathbf{z}_k * \mathbf{d}_k }^2_2 \quad + \quad\lambda \sum_{k=1}^K \norm{\mathbf{z}_k}_1
 \end{equation}
+
+Since convolution with a fixed atom $\mathbf{d}_k$ is linear in $\mathbf{z}_k$, there exists a matrix 
+$D_k$ such that $D_k \mathbf{z}_k = \mathbf{z}_k * \mathbf{d}_k$.
+Stacking all activations $\mathbf{z}_k$ into 
+$\boldsymbol{\beta} = [\mathbf{z}_1^\top,\dots,\mathbf{z}_K^\top]^\top$
+and defining 
+$X = [D_1 \; D_2 \; \cdots \; D_K]$, the problem becomes
+\[
+\min_{\boldsymbol{\beta}} 
+\|\mathbf{x} - X\boldsymbol{\beta}\|_2^2 + \lambda \|\boldsymbol{\beta}\|_1,
+\]
+which is exactly a Lasso regression with response $\mathbf{x}$ and design matrix $X$.
+
+To answer the following question we just apply the result proved in the first question. 
+
+
 
 \end{solution}
 
@@ -107,8 +145,30 @@ In this question, let $X_n$ ($n=0,\dots,N-1)$ be a Gaussian white noise.
 \end{exercise}
 
 \begin{solution}
+By definition of (zero-mean) Gaussian white noise, the samples $(X_n)$ are i.i.d. with
+$\mathbb{E}[X_n] = 0$ and $\mathrm{Var}(X_n)=\sigma^2$.
 
+The autocovariance function is
+\[
+\gamma_X[k] \;=\; \mathbb{E}[X_n X_{n+k}]
+\;=\;
+\begin{cases}
+\sigma^2, & k = 0,\\
+0, & k \neq 0~,
+\end{cases}
+\]
+i.e. $\gamma_X[k] = \sigma^2 \,\delta[k]$.
+
+The power spectrum (power spectral density), defined as the discrete-time Fourier transform of $\gamma_X[k]$, is then
+\[
+S_X(\omega)
+= \sum_{k=-\infty}^{\infty} \gamma_X[k] e^{-j\omega k}
+= \sigma^2.
+\]
+
+Therefore, the spectrum is flat (constant in $\omega$), which motivates the term ``white''.
 \end{solution}
+
 
 
 \begin{exercise}
@@ -125,6 +185,25 @@ for $\tau=0,1,\dots,N-1$ and $\hat{\gamma}(\tau):=\hat{\gamma}(-\tau)$ for $\tau
 \end{exercise}
 
 \begin{solution}
+\begin{equation}
+    \begin{split}
+   \mathbb{E}[\hat{\gamma}(\tau)] & = (1/N) \sum_{n=0}^{N-\tau-1} \mathbb{E}[X_n X_{n+\tau}] \\
+                                  & =  \frac{N-\tau}{N}\gamma(\tau)
+    \end{split}
+\end{equation}
+
+Thus $\hat{\gamma}(\tau)$ is biased for any finite $N$ unless $\tau=0$. 
+
+However,
+\[
+\lim_{N \to \infty} \mathbb{E}[\hat{\gamma}(\tau)]
+= \lim_{N \to \infty} \frac{N-\tau}{N} \gamma(\tau)
+= \gamma(\tau),
+\]
+so the estimator is asymptotically unbiased.
+
+We can debias this estimator by replacing the division by $N$ by $N-\tau$
+    
 
 \end{solution}
 
@@ -143,8 +222,80 @@ The \textit{periodogram} is the collection of values $|J(f_0)|^2$, $|J(f_1)|^2$,
 \end{exercise}
 
 \begin{solution}
-    
+We have
+\begin{equation}
+|J(f_k)|^2 
+= \frac{1}{N}\sum_{n=0}^{N-1}\sum_{m=0}^{N-1}
+X_n X_m\, e^{-2\pi i (k/N)(n-m)}.
+\end{equation}
+Grouping terms with the same lag $\tau = n-m$ yields
+\begin{equation}
+|J(f_k)|^2 
+= \sum_{\tau=-(N-1)}^{N-1} 
+\hat{\gamma}(\tau)\, e^{-2\pi i (k/N)\tau},
+\end{equation}
+where 
+\begin{equation}
+\hat{\gamma}(\tau)
+= \frac{1}{N}\sum_{n=0}^{N-1-|\tau|} X_n X_{n+|\tau|},
+\qquad
+\hat{\gamma}(-\tau)=\hat{\gamma}(\tau).
+\end{equation}
+Hence, the periodogram is the discrete Fourier transform of the sample autocovariance sequence.
+
+Recall that the power spectral density is
+\begin{equation}
+S(f) \;=\; \sum_{\tau=-\infty}^{\infty} \gamma(\tau)\,
+e^{-2\pi i f \tau / f_s},
+\end{equation}
+
+From the first part,
+\begin{equation}
+|J(f_k)|^2 
+= \sum_{\tau=-(N-1)}^{N-1} 
+\hat{\gamma}(\tau)\, e^{-2\pi i (k/N)\tau},
+\qquad
+f_k = \frac{f_s k}{N}.
+\end{equation}
+
+Taking expectation,
+\begin{equation}
+\mathbb{E}\big[ |J(f_k)|^2 \big]
+= \sum_{\tau=-(N-1)}^{N-1} 
+\mathbb{E}[\hat{\gamma}(\tau)]\, e^{-2\pi i (k/N)\tau}.
+\end{equation}
+
+From the previous question, $\mathbb{E}[\hat{\gamma}(\tau)]
+= \frac{N-|\tau|}{N}\,\gamma(\tau)$. (The absolute value is used here to take negative $\tau$ values)
+Thus,
+\begin{equation}
+\mathbb{E}\big[ |J(f_k)|^2 \big]
+= \sum_{\tau=-(N-1)}^{N-1} 
+\frac{N-|\tau|}{N}\,\gamma(\tau)\,
+e^{-2\pi i (k/N)\tau}.
+\end{equation}
+
+As $N\to\infty$, we have $\frac{N-|\tau|}{N}\to 1$ for each fixed $\tau$, and
+the finite sum converges to the bilateral sum defining $S(f)$ evaluated at 
+$f = f_k = f_s k/N$. Hence
+\begin{equation}
+\lim_{N\to\infty} 
+\mathbb{E}\big[ |J(f_k)|^2 \big]
+= S(f_k).
+\end{equation}
+
+Finally, for an arbitrary $f>0$, let $f^{(N)}$ be the closest Fourier frequency
+$f_k$. Then $f^{(N)} \to f$ as $N\to\infty$, and by continuity of $S(f)$,
+\begin{equation}
+\lim_{N\to\infty} 
+\mathbb{E}\big[ |J(f^{(N)})|^2 \big]
+= S(f).
+\end{equation}
+Therefore $|J(f^{(N)})|^2$ is an asymptotically unbiased estimator of $S(f)$
+for $f>0$.
+
 \end{solution}
+
 
 \begin{exercise}\label{ex:wn-exp}
     In this question, let $X_n$ ($n=0,\dots,N-1)$ be a Gaussian white noise with variance $\sigma^2=1$ and set the sampling frequency to $f_s=1$ Hz

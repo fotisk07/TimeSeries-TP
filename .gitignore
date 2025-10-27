@@ -12,3 +12,11 @@ wheels/
 
 # Latex generated files
 *.log
+*.fls
+*xsim
+*gz
+*.out
+*.fdb_latexmk
+*.fls
+*.aux
+
