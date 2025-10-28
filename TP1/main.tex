@@ -441,6 +441,8 @@ Combine the DTW and a k-neighbors classifier to classify each step. Find the opt
 \end{exercise}
 
 \begin{solution}
+    We find that the best numbers of neighbors is 2 or 4. 
+    Best F1 = 0.88 for k = 2; performance drops for larger k, showing that local neighborhood information is most discriminative in DTW space.
 
 \end{solution}
 
@@ -453,12 +455,12 @@ Display on Figure~\ref{fig:class-errors} a badly classified step from each class
 \begin{figure}
     \centering
     \begin{minipage}[t]{\textwidth}
-    \centerline{\includegraphics[width=0.6\textwidth]{example-image-golden}}
+    \centerline{\includegraphics[width=0.6\textwidth]{figures/BCHS.png}}
     \centerline{Badly classified healthy step}
     \end{minipage}
     \vskip1em
     \begin{minipage}[t]{\textwidth}
-    \centerline{\includegraphics[width=0.6\textwidth]{example-image-golden}}
+    \centerline{\includegraphics[width=0.6\textwidth]{figures/BCNHS.png}}
     \centerline{Badly classified non-healthy step}
     \end{minipage}
     \vskip1em
