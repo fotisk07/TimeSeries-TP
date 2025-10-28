@@ -312,28 +312,28 @@ for $f>0$.
 \begin{figure}
     \centering
     \begin{minipage}[t]{0.3\textwidth}
-    \centerline{\includegraphics[width=\textwidth]{example-image-golden}}
+    \centerline{\includegraphics[width=\textwidth]{figures/gamma_N200.png}}
     \centerline{Autocovariance ($N=200$)}
     \end{minipage}
     \begin{minipage}[t]{0.3\textwidth}
-    \centerline{\includegraphics[width=\textwidth]{example-image-golden}}
+    \centerline{\includegraphics[width=\textwidth]{figures/gamma_N500.png}}
     \centerline{Autocovariance ($N=500$)}
     \end{minipage}
     \begin{minipage}[t]{0.3\textwidth}
-    \centerline{\includegraphics[width=\textwidth]{example-image-golden}}
+    \centerline{\includegraphics[width=\textwidth]{figures/gamma_N1000.png}}
     \centerline{Autocovariance ($N=1000$)}
     \end{minipage}
     \vskip1em
     \begin{minipage}[t]{0.3\textwidth}
-    \centerline{\includegraphics[width=\textwidth]{example-image-golden}}
+    \centerline{\includegraphics[width=\textwidth]{figures/Jfk**2_N200.png}}
     \centerline{Periodogram ($N=200$)}
     \end{minipage}
     \begin{minipage}[t]{0.3\textwidth}
-    \centerline{\includegraphics[width=\textwidth]{example-image-golden}}
+    \centerline{\includegraphics[width=\textwidth]{figures/Jfk**2_N500.png}}
     \centerline{Periodogram ($N=500$)}
     \end{minipage}
     \begin{minipage}[t]{0.3\textwidth}
-    \centerline{\includegraphics[width=\textwidth]{example-image-golden}}
+    \centerline{\includegraphics[width=\textwidth]{figures/Jfk**2_N1000.png}}
     \centerline{Periodogram ($N=1000$)}
     \end{minipage}
     \vskip1em
@@ -344,7 +344,8 @@ for $f>0$.
 \end{exercise}
 
 \begin{solution}
-    
+For all signal lengths $N \in \{200, 500, 1000\}$, the estimated sample autocovariances exhibit a sharp peak at lag $\tau = 0$, followed by values fluctuating around zero. This behavior is characteristic of white noise, whose samples are uncorrelated across time. The periodograms, representing $|J(f_k)|^2$ versus $f_k$, are approximately flat across all frequencies, reflecting the constant theoretical power spectral density of white noise. Averaging over 100 simulations smooths the mean spectrum, but the wide standard deviation band highlights that the periodogram is a highly variable estimator---asymptotically unbiased but not consistent. Increasing $N$ densifies the frequency grid, yielding smoother curves but similar variance at each frequency.
+
 \end{solution}
 
 \begin{exercise}
