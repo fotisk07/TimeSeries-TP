@@ -6,7 +6,7 @@
 \title{Assignment 1 (ML for TS) - MVA}
 \author{
 Fotios Kapotos \email{fotiskapotos@gmail.com} \\ % student 1
-Firstname Lastname \email{youremail2@mail.com} % student 2
+Adonis Jamal \email{adonis.jamal@student-cs.fr} % student 2
 }
 
 \begin{document}
@@ -50,26 +50,26 @@ Show that there exists $\lambda_{\max}$ such that the minimizer of~\eqref{eq:las
 \begin{solution}  % ANSWER HERE
     We denote by \( F_\lambda(\beta) \) the Lasso objective.  
     For every \( \beta \),
-    \begin{equation}
+    \begin{equation*}
     \begin{aligned}
     F_\lambda(\beta) - F_\lambda(0)
     &= \frac{1}{2}\|y - X\beta\|_2^2 + \lambda \|\beta\|_1 - \frac{1}{2}\|y\|_2^2 \\[6pt]
     &= -\,y^\top X\beta + \frac{1}{2}\|X\beta\|_2^2 + \lambda \|\beta\|_1.
     \end{aligned}
-    \end{equation}
+    \end{equation*}
 
     Or, using Hölder's inequality,
-    \begin{equation}
+    \begin{equation*}
         |y^\top X\beta| \;\leq\; \|X^\top y\|_\infty \, \|\beta\|_1.
-    \end{equation}
+    \end{equation*}
 
     Hence,
-    \begin{equation}
+    \begin{equation*}
         F_\lambda(\beta) - F_\lambda(0)
         \;\geq\;
         \left( \lambda - \|X^\top y\|_\infty \right) \|\beta\|_1
         + \frac{1}{2}\|X\beta\|_2^2.
-    \end{equation}
+    \end{equation*}
 
 By noting that \(\lambda_{\max} = \|X^\top y\|_\infty\), we can conclude that for all \(\lambda \geq \lambda_{\max}\), the unique minimizer is \(\beta = 0\).
 
@@ -95,9 +95,9 @@ Show that
 
 For a fixed dictionnary the problem becomes
 
-\begin{equation}
+\begin{equation*}
 \min_{(\mathbf{z}_k)_k \\ \norm{\mathbf{d}_k}_2^2\leq 1} \quad\norm{\mathbf{x} - \sum_{k=1}^K \mathbf{z}_k * \mathbf{d}_k }^2_2 \quad + \quad\lambda \sum_{k=1}^K \norm{\mathbf{z}_k}_1
-\end{equation}
+\end{equation*}
 
 Since convolution with a fixed atom $\mathbf{d}_k$ is linear in $\mathbf{z}_k$, there exists a matrix 
 $D_k$ such that $D_k \mathbf{z}_k = \mathbf{z}_k * \mathbf{d}_k$.
@@ -185,12 +185,12 @@ for $\tau=0,1,\dots,N-1$ and $\hat{\gamma}(\tau):=\hat{\gamma}(-\tau)$ for $\tau
 \end{exercise}
 
 \begin{solution}
-\begin{equation}
+\begin{equation*}
     \begin{split}
    \mathbb{E}[\hat{\gamma}(\tau)] & = (1/N) \sum_{n=0}^{N-\tau-1} \mathbb{E}[X_n X_{n+\tau}] \\
                                   & =  \frac{N-\tau}{N}\gamma(\tau)
     \end{split}
-\end{equation}
+\end{equation*}
 
 Thus $\hat{\gamma}(\tau)$ is biased for any finite $N$ unless $\tau=0$. 
 
@@ -223,74 +223,74 @@ The \textit{periodogram} is the collection of values $|J(f_0)|^2$, $|J(f_1)|^2$,
 
 \begin{solution}
 We have
-\begin{equation}
+\begin{equation*}
 |J(f_k)|^2 
 = \frac{1}{N}\sum_{n=0}^{N-1}\sum_{m=0}^{N-1}
 X_n X_m\, e^{-2\pi i (k/N)(n-m)}.
-\end{equation}
+\end{equation*}
 Grouping terms with the same lag $\tau = n-m$ yields
-\begin{equation}
+\begin{equation*}
 |J(f_k)|^2 
 = \sum_{\tau=-(N-1)}^{N-1} 
 \hat{\gamma}(\tau)\, e^{-2\pi i (k/N)\tau},
-\end{equation}
+\end{equation*}
 where 
-\begin{equation}
+\begin{equation*}
 \hat{\gamma}(\tau)
 = \frac{1}{N}\sum_{n=0}^{N-1-|\tau|} X_n X_{n+|\tau|},
 \qquad
 \hat{\gamma}(-\tau)=\hat{\gamma}(\tau).
-\end{equation}
+\end{equation*}
 Hence, the periodogram is the discrete Fourier transform of the sample autocovariance sequence.
 
 Recall that the power spectral density is
-\begin{equation}
+\begin{equation*}
 S(f) \;=\; \sum_{\tau=-\infty}^{\infty} \gamma(\tau)\,
 e^{-2\pi i f \tau / f_s},
-\end{equation}
+\end{equation*}
 
 From the first part,
-\begin{equation}
+\begin{equation*}
 |J(f_k)|^2 
 = \sum_{\tau=-(N-1)}^{N-1} 
 \hat{\gamma}(\tau)\, e^{-2\pi i (k/N)\tau},
 \qquad
 f_k = \frac{f_s k}{N}.
-\end{equation}
+\end{equation*}
 
 Taking expectation,
-\begin{equation}
+\begin{equation*}
 \mathbb{E}\big[ |J(f_k)|^2 \big]
 = \sum_{\tau=-(N-1)}^{N-1} 
 \mathbb{E}[\hat{\gamma}(\tau)]\, e^{-2\pi i (k/N)\tau}.
-\end{equation}
+\end{equation*}
 
 From the previous question, $\mathbb{E}[\hat{\gamma}(\tau)]
 = \frac{N-|\tau|}{N}\,\gamma(\tau)$. (The absolute value is used here to take negative $\tau$ values)
 Thus,
-\begin{equation}
+\begin{equation*}
 \mathbb{E}\big[ |J(f_k)|^2 \big]
 = \sum_{\tau=-(N-1)}^{N-1} 
 \frac{N-|\tau|}{N}\,\gamma(\tau)\,
 e^{-2\pi i (k/N)\tau}.
-\end{equation}
+\end{equation*}
 
 As $N\to\infty$, we have $\frac{N-|\tau|}{N}\to 1$ for each fixed $\tau$, and
 the finite sum converges to the bilateral sum defining $S(f)$ evaluated at 
 $f = f_k = f_s k/N$. Hence
-\begin{equation}
+\begin{equation*}
 \lim_{N\to\infty} 
 \mathbb{E}\big[ |J(f_k)|^2 \big]
 = S(f_k).
-\end{equation}
+\end{equation*}
 
 Finally, for an arbitrary $f>0$, let $f^{(N)}$ be the closest Fourier frequency
 $f_k$. Then $f^{(N)} \to f$ as $N\to\infty$, and by continuity of $S(f)$,
-\begin{equation}
+\begin{equation*}
 \lim_{N\to\infty} 
 \mathbb{E}\big[ |J(f^{(N)})|^2 \big]
 = S(f).
-\end{equation}
+\end{equation*}
 Therefore $|J(f^{(N)})|^2$ is an asymptotically unbiased estimator of $S(f)$
 for $f>0$.
 
@@ -348,6 +348,8 @@ For all signal lengths $N \in \{200, 500, 1000\}$, the estimated sample autocova
 
 \end{solution}
 
+
+%%% QUESTION 7 %%%
 \begin{exercise}
     We want to show that the estimator $\hat{\gamma}(\tau)$ is consistent, \ie it converges in probability when the number $N$ of samples grows to $\infty$ to the true value ${\gamma}(\tau)$.
     In this question, assume that $X$ is a wide-sense stationary \textit{Gaussian} process.
@@ -362,12 +364,56 @@ For all signal lengths $N \in \{200, 500, 1000\}$, the estimated sample autocova
 \end{exercise}
 
 \begin{solution}
+    Let $\tau > 0$. We compute $\mathbb{E}[\hat{\gamma}^2(\tau)]$:\\
+    $\begin{aligned}
+        \mathbb{E}[\hat{\gamma}^2(\tau)]
+        &= \mathbb{E} \left[ \frac{1}{N^2} \sum_{0\leq n, m \leq N - \tau -1} X_n X_{n + \tau} X_m X_{m + \tau} \right]\\
+        &= \frac{1}{N^2} \sum_{0\leq n, m \leq N - \tau -1} \mathbb{E}[X_n X_{n + \tau} X_m X_{m + \tau}]
+    \end{aligned}$\\
+    Using the hint, since we assume that $X$ is a Gaussian process, we have:\\
+    $\begin{aligned}
+        \mathbb{E}[\hat{\gamma}^2(\tau)]
+        &= \frac{1}{N^2} \sum_{0\leq n, m \leq N - \tau -1} \mathbb{E}[X_n X_{n + \tau}] \mathbb{E}[X_m X_{m + \tau}] + \mathbb{E}[X_n X_m] \mathbb{E}[X_{n + \tau} X_{m + \tau}] + \mathbb{E}[X_n X_{m + \tau}] \mathbb{E}[X_m X_{n + \tau}]\\
+        &= \frac{1}{N^2} \sum_{0\leq n, m \leq N - \tau -1} \gamma^2(\tau) + \gamma^2(n - m) + \gamma(n - m + \tau) \gamma(n - m - \tau)\\
+        &= \frac{(N - \tau)^2}{N^2} \gamma^2 (\tau) + \frac{1}{N^2} \sum_{0\leq n, m \leq N - \tau -1} \gamma^2(n - m) + \gamma(n - m + \tau) \gamma(n - m - \tau)
+    \end{aligned}$\\
+    We know that $\var (\hat{\gamma}(\tau)) = \mathbb{E}[\hat{\gamma}^2(\tau)] - (\mathbb{E}[\hat{\gamma}(\tau)])^2$. From the previous exercise, we have $\mathbb{E}[\hat{\gamma}(\tau)] = \frac{N - \tau}{N} \gamma(\tau)$. Therefore, $$(\mathbb{E}[\hat{\gamma}(\tau)])^2 = \frac{(N - \tau)^2}{N^2} \gamma^2 (\tau)$$
+    By noticing that this term simplifies with the previous result, we can now express the variance as:
+    $$\var (\hat{\gamma}(\tau)) = \frac{1}{N^2} \sum_{0\leq n, m \leq N - \tau -1} \gamma^2(n - m) + \gamma(n - m + \tau) \gamma(n - m - \tau)$$
+    The double summation only depends on the difference $k = n - m$. By changing the variables, we have for a given $k$, $(N - \tau - |k|)$ pairs $(n, m)$. We get:\\
+    $\begin{aligned}
+        \var (\hat{\gamma}(\tau)) 
+        &= \frac{1}{N^2} \sum_{n = -(N - \tau - 1)}^{N - \tau - 1} (N - \tau - |n|) [\gamma^2 (n) + \gamma (n - \tau) \gamma (n + \tau)]\\
+        &= \frac{1}{N} \sum_{n = -(N - \tau - 1)}^{N - \tau - 1} \frac{N - \tau - |n|}{N} [\gamma^2 (n) + \gamma (n - \tau) \gamma (n + \tau)]\\
+        &= \frac{1}{N} \sum_{n = -(N - \tau - 1)}^{N - \tau - 1}  \left( 1 - \frac{\tau + |n|}{N}\right) [\gamma^2 (n) + \gamma (n - \tau) \gamma (n + \tau)]
+    \end{aligned}$\\
+    The obtained result is exactly what we were looking for.
+
+    From exercise 4, we know that $\lim_{N \to \infty} \mathbb{E}[\hat{\gamma}(\tau)] = \gamma(\tau)$, so the estimator is asymptotically unbiased.
+
+    We need to show that $\lim_{N \to \infty} \var(\hat{\gamma}(\tau)) = 0$ to prove that $\hat{\gamma}(\tau)$ is consistent. 
     
+    We bound $\var (\hat{\gamma}(\tau))$:\\
+    $\begin{aligned}
+            |\var (\hat{\gamma}(\tau))|
+            &\leq \frac{1}{N} \sum_{k = -(N - \tau - 1)}^{N - \tau - 1} \left| 1 - \frac{\tau + |k|}{N}\right| |\gamma^2 (n) + \gamma (n - \tau) \gamma (n + \tau)|\\
+            &\leq \frac{1}{N} \sum_{k = -(N - \tau - 1)}^{N - \tau - 1} |\gamma^2 (n) + \gamma (n - \tau) \gamma (n + \tau)|\\
+            &\leq \frac{2}{N} \sum_{k \in \mathbb{Z}} \gamma^2 (k) \xrightarrow[N \to \infty]{} 0 
+    \end{aligned}$
+
+    Applying the Bienaymé-Tchebychev inequality to $\hat{\gamma}$ with $\epsilon > 0$:
+    $$\mathbb{P}[|\hat{\gamma}(\tau) - \mathbb{E}[\hat{\gamma}(\tau)]| > \epsilon] \leq \frac{\var (\hat{\gamma}(\tau))}{\epsilon}$$
+    Since we have proven that the variance tends to 0, we conclude that $\hat{\gamma}(\tau)$ is consistent.
 \end{solution}
+\vspace{1cm}
+
+
+
 
 Contrary to the correlogram, the periodogram is not consistent.
 It is one of the most well-known estimators that is asymptotically unbiased but not consistent.
 In the following question, this is proven for Gaussian white noise, but this holds for more general stationary processes.
+%%% QUESTION 8 %%%
 \begin{exercise}
     Assume that $X$ is a Gaussian white noise (variance $\sigma^2$) and let $A(f):=\sum_{n=0}^{N-1} X_n \cos(-2\pi f n/f_s$ and $B(f):=\sum_{n=0}^{N-1} X_n \sin(-2\pi f n/f_s$.
     Observe that $J(f) = (1/N) (A(f) + \iu B(f))$.
@@ -381,8 +427,86 @@ In the following question, this is proven for Gaussian white noise, but this hol
 \end{exercise}
 
 \begin{solution}
-    
+\begin{itemize}
+
+%%% MEAN AND VARIANCE %%%
+\item Since $\{X_n\}$ is a Gaussian white noise, we have $\mathbb{E}[X_n] = 0$ and $\mathrm{Var}(X_n) = \sigma^2$.  
+Let
+\[
+A(f_k) = \sum_{n=0}^{N-1} X_n \cos\!\left(-\frac{2\pi k n}{N}\right),
+\quad
+B(f_k) = \sum_{n=0}^{N-1} X_n \sin\!\left(-\frac{2\pi k n}{N}\right).
+\]
+
+The mean of \(A(f_k)\) is
+\[
+\mathbb{E}[A(f_k)] = \sum_{n=0}^{N-1} \mathbb{E}[X_n] \cos\!\left(-\frac{2\pi k n}{N}\right) = 0.
+\]
+
+For the variance,
+\[
+\begin{aligned}
+\mathrm{Var}[A(f_k)]
+&= \sum_{n=0}^{N-1} \mathrm{Var}(X_n) \cos^2\!\left(\frac{2\pi k n}{N}\right)\\
+&= \sigma^2 \sum_{n=0}^{N-1} \cos^2\!\left(\frac{2\pi k n}{N}\right)\\
+&= \frac{\sigma^2}{2} \!\left(N + \Re\!\left(\sum_{n=0}^{N-1} e^{4i\pi k n/N}\right)\right)
+= \frac{N\sigma^2}{2}.
+\end{aligned}
+\]
+
+Similarly,
+\[
+\mathbb{E}[B(f_k)] = 0, \qquad
+\mathrm{Var}[B(f_k)] = \frac{N\sigma^2}{2}.
+\]
+
+%%% DISTRIBUTION OF THE PERIODOGRAM VALUES %%%
+\item The covariance between \(A(f_k)\) and \(B(f_k)\) is
+\[
+\begin{aligned}
+\mathbb{E}[A(f_k)B(f_k)]
+&= \mathbb{E}\!\left[\sum_{n,m} X_n X_m 
+\cos\!\left(\frac{2\pi k n}{N}\right)
+\sin\!\left(\frac{2\pi k m}{N}\right)\right]\\
+&= \sum_{n=0}^{N-1} \mathbb{E}[X_n^2] 
+\cos\!\left(\frac{2\pi k n}{N}\right)
+\sin\!\left(\frac{2\pi k n}{N}\right)\\
+&= \frac{\sigma^2}{2} \sum_{n=0}^{N-1} \sin\!\left(\frac{4\pi k n}{N}\right) = 0.
+\end{aligned}
+\]
+Thus \(A(f_k)\) and \(B(f_k)\) are uncorrelated, and since they are jointly Gaussian, they are independent.
+
+The periodogram value is
+\[
+|J(f_k)|^2 = \frac{1}{N}\big(A^2(f_k) + B^2(f_k)\big).
+\]
+Since \(A(f_k)\) and \(B(f_k)\) are independent \(\mathcal{N}(0, N\sigma^2/2)\) variables,
+\[
+\frac{2|J(f_k)|^2}{\sigma^2} \sim \chi^2_2.
+\]
+Hence,
+\[
+|J(f_k)|^2 \sim \sigma^2 \, \mathrm{Exp}(1),
+\]
+for \(0 < k < N/2\), while for \(k=0\) and \(k=N/2\), \(B(f_k)=0\) and we have
+\[
+|J(f_k)|^2 \sim \frac{\sigma^2}{2}\chi^2_1.
+\]
+
+%%% VARIANCE OF THE PERIODOGRAM %%%
+\item From the exponential distribution,
+\[
+\mathbb{E}[|J(f_k)|^2] = \sigma^2, 
+\qquad
+\mathrm{Var}(|J(f_k)|^2) = \sigma^4.
+\]
+The variance does not depend on \(N\). Thus, the periodogram \( |J(f_k)|^2 \) is not a consistent estimator of the true spectral density since its variance does not vanish as \(N \to \infty\).
+
+%%% ERRATIC BEHAVIOR %%%
+\item The erratic behavior of the periodogram observed in Question~\ref{ex:wn-exp} arises precisely from this non-vanishing variance.
+\end{itemize}
 \end{solution}
+
 
 \begin{exercise}\label{q:barlett}
     As seen in the previous question, the problem with the periodogram is the fact that its variance does not decrease with the sample size.
