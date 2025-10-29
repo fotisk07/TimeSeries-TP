@@ -426,56 +426,86 @@ In the following question, this is proven for Gaussian white noise, but this hol
 \end{exercise}
 
 \begin{solution}
-    \begin{itemize}
-        %%% MEAN AND VARIANCE %%%
-        \item X is a Gaussian white noise. Let's start by computing the mean and variance of $A(f)$. The mean is: $$\begin{aligned}
-            \mathbb{E}[A(f)] &= \sum_{n=0}^{N-1} \mathbb{E}[X_n] \cos(-2\pi k n/N) = 0\\
-        \end{aligned}$$
-        Meanwhile, for the variance of $A(f)$, we have: $$\begin{aligned}
-            \var(A(f))
-            &= \sum_{n=0}^{N-1} \var(X_n) \cos^2(-2\pi k n/N)\\
-            &= \sum_{n=0}^{N-1} \sigma^2 \cos^2(-2\pi k n/N)\\
-            &= \frac{\sigma^2}{2} (N + \Re (\sum_{n=0}^{N-1} \exp{\frac{4i \pi k n}{N}}))\\
-            &= \frac{N \sigma^2}{2}
-        \end{aligned}$$
-        And then for $B(f)$, we find the same mean: $$\mathbb{E}[B(f)] &= \sum_{n=0}^{N-1} \mathbb{E}[X_n] sin(-2\pi k n/N) = 0$$
-        And in the same way as for $A(f)$, we find the variance: $$\begin{aligned}
-             \var(B(f))
-             &= \sum_{n=0}^{N-1} \var(X_n) \sin^2(-2\pi k n/N)\\
-             &= \sum_{n=0}^{N-1} \sigma^2 \sin^2(-2\pi k n/N)\\
-             &= \sigma^2 \sum_{n=0}^{N-1} 1 - \cos^2(-2\pi k n/N)\\
-             &= \frac{N \sigma^2}{2}
-        \end{aligned}$$
+\begin{itemize}
 
-         
-        %%% DISTRIBUTION OF THE PERIODOGRAM VALUES %%%
-        \item Now we look at the distribution of the periodogram values. We start by computing the covariance: $$\begin{aligned}
-            \mathbb{E}[A(f_k)B(f_k)] 
-            &= \mathbb{E} \left[ \sum_{0 \leq n, m \leq N-1} X_n X_m \cos(-2\pi kn/N) \sin(-2\pi k m/N)\right]\\
-            &= \sum_{n=0}^{N-1} \mathbb{E}[X_n^2] \sin(-2\pi kn/N)\\
-            &= \sigma^2 \sum_{n=0}^{N-1} \sin(-2\pi kn/N)\\
-            &= 0
-        \end{aligned}$$
-        Since $A(f_k)$ and $B(f_k)$ are jointly Gaussian and uncorrelated, they are independent. Therefore, we have: $$|J(f_k)|^2 = \frac{1}{N}(A^2(f_k) + B^2 (f_k))$$
-        This is the squared sum of two independent Gaussian variables with the same variance and mean. We have $$|J(f_k)^2| = \frac{\sigma}{2} \chi_2^2$$
-        For $\chi_2^2$ a chi-square with $2$ degrees of freedom. For $0 < k < N/2$, $|J(f_k)^2|$ follows an exponential distribution: $$|J(f_k)^2| \sim \sigma^2 \text{Exp}(1)$$
-        For the edge cases $k = 0$ and $k = N/2$, $|J(f_k)^2|$ follows a chi-square distribution with one degree of freedom.
+%%% MEAN AND VARIANCE %%%
+\item Since $\{X_n\}$ is a Gaussian white noise, we have $\mathbb{E}[X_n] = 0$ and $\mathrm{Var}(X_n) = \sigma^2$.  
+Let
+\[
+A(f_k) = \sum_{n=0}^{N-1} X_n \cos\!\left(-\frac{2\pi k n}{N}\right),
+\quad
+B(f_k) = \sum_{n=0}^{N-1} X_n \sin\!\left(-\frac{2\pi k n}{N}\right).
+\]
 
-        
-        
-        %%% VARIANCE J(f_k) %%%
-        \item From the exponential form, we get: $$\begin{aligned}
-            \mathbb{E}[|J(f_k)|^2] &= \sigma^2\\
-            \var (|J(f_k)|^2) &= \sigma^2
-        \end{aligned}$$
-        The variance does not depend on $N$. Since a consistent estimator must have variance tending to $o$ as $N \to \infty$, the periodogram values $|J(f_k)|^2$ is not a consistent estimator.
+The mean of \(A(f_k)\) is
+\[
+\mathbb{E}[A(f_k)] = \sum_{n=0}^{N-1} \mathbb{E}[X_n] \cos\!\left(-\frac{2\pi k n}{N}\right) = 0.
+\]
 
-        
-        %%% ERRATIC BEHAVIOR %%%
-        \item The erratic behavior of the periodogram in Question~\ref{ex:wn-exp} results from the non-zero variance. 
-        
-    \end{itemize}
+For the variance,
+\[
+\begin{aligned}
+\mathrm{Var}[A(f_k)]
+&= \sum_{n=0}^{N-1} \mathrm{Var}(X_n) \cos^2\!\left(\frac{2\pi k n}{N}\right)\\
+&= \sigma^2 \sum_{n=0}^{N-1} \cos^2\!\left(\frac{2\pi k n}{N}\right)\\
+&= \frac{\sigma^2}{2} \!\left(N + \Re\!\left(\sum_{n=0}^{N-1} e^{4i\pi k n/N}\right)\right)
+= \frac{N\sigma^2}{2}.
+\end{aligned}
+\]
+
+Similarly,
+\[
+\mathbb{E}[B(f_k)] = 0, \qquad
+\mathrm{Var}[B(f_k)] = \frac{N\sigma^2}{2}.
+\]
+
+%%% DISTRIBUTION OF THE PERIODOGRAM VALUES %%%
+\item The covariance between \(A(f_k)\) and \(B(f_k)\) is
+\[
+\begin{aligned}
+\mathbb{E}[A(f_k)B(f_k)]
+&= \mathbb{E}\!\left[\sum_{n,m} X_n X_m 
+\cos\!\left(\frac{2\pi k n}{N}\right)
+\sin\!\left(\frac{2\pi k m}{N}\right)\right]\\
+&= \sum_{n=0}^{N-1} \mathbb{E}[X_n^2] 
+\cos\!\left(\frac{2\pi k n}{N}\right)
+\sin\!\left(\frac{2\pi k n}{N}\right)\\
+&= \frac{\sigma^2}{2} \sum_{n=0}^{N-1} \sin\!\left(\frac{4\pi k n}{N}\right) = 0.
+\end{aligned}
+\]
+Thus \(A(f_k)\) and \(B(f_k)\) are uncorrelated, and since they are jointly Gaussian, they are independent.
+
+The periodogram value is
+\[
+|J(f_k)|^2 = \frac{1}{N}\big(A^2(f_k) + B^2(f_k)\big).
+\]
+Since \(A(f_k)\) and \(B(f_k)\) are independent \(\mathcal{N}(0, N\sigma^2/2)\) variables,
+\[
+\frac{2|J(f_k)|^2}{\sigma^2} \sim \chi^2_2.
+\]
+Hence,
+\[
+|J(f_k)|^2 \sim \sigma^2 \, \mathrm{Exp}(1),
+\]
+for \(0 < k < N/2\), while for \(k=0\) and \(k=N/2\), \(B(f_k)=0\) and we have
+\[
+|J(f_k)|^2 \sim \frac{\sigma^2}{2}\chi^2_1.
+\]
+
+%%% VARIANCE OF THE PERIODOGRAM %%%
+\item From the exponential distribution,
+\[
+\mathbb{E}[|J(f_k)|^2] = \sigma^2, 
+\qquad
+\mathrm{Var}(|J(f_k)|^2) = \sigma^4.
+\]
+The variance does not depend on \(N\). Thus, the periodogram \( |J(f_k)|^2 \) is not a consistent estimator of the true spectral density since its variance does not vanish as \(N \to \infty\).
+
+%%% ERRATIC BEHAVIOR %%%
+\item The erratic behavior of the periodogram observed in Question~\ref{ex:wn-exp} arises precisely from this non-vanishing variance.
+\end{itemize}
 \end{solution}
+
 
 \begin{exercise}\label{q:barlett}
     As seen in the previous question, the problem with the periodogram is the fact that its variance does not decrease with the sample size.
