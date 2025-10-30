@@ -325,15 +325,15 @@ for $f>0$.
     \end{minipage}
     \vskip1em
     \begin{minipage}[t]{0.3\textwidth}
-    \centerline{\includegraphics[width=\textwidth]{figures/Jfk**2_N200.png}}
+    \centerline{\includegraphics[width=\textwidth]{figures/Jfk2_N200.png}}
     \centerline{Periodogram ($N=200$)}
     \end{minipage}
     \begin{minipage}[t]{0.3\textwidth}
-    \centerline{\includegraphics[width=\textwidth]{figures/Jfk**2_N500.png}}
+    \centerline{\includegraphics[width=\textwidth]{figures/Jfk2_N500.png}}
     \centerline{Periodogram ($N=500$)}
     \end{minipage}
     \begin{minipage}[t]{0.3\textwidth}
-    \centerline{\includegraphics[width=\textwidth]{figures/Jfk**2_N1000.png}}
+    \centerline{\includegraphics[width=\textwidth]{figures/Jfk2_N1000.png}}
     \centerline{Periodogram ($N=1000$)}
     \end{minipage}
     \vskip1em
@@ -503,9 +503,22 @@ for \(0 < k < N/2\), while for \(k=0\) and \(k=N/2\), \(B(f_k)=0\) and we have
 The variance does not depend on \(N\). Thus, the periodogram \( |J(f_k)|^2 \) is not a consistent estimator of the true spectral density since its variance does not vanish as \(N \to \infty\).
 
 %%% ERRATIC BEHAVIOR %%%
-\item The erratic behavior of the periodogram observed in Question~\ref{ex:wn-exp} arises precisely from this non-vanishing variance.
+\item The erratic behavior of the periodogram observed in Question~\ref{ex:wn-exp} arises precisely from this non-vanishing variance.   
+\item $X_n$ is Gaussian white noise. $J(f_k)$ and $J(f_j)$ are jointly Gaussian, since they are linear combinations of jointly Gaussian variables $X_n$. In this case, for jointly Gaussian variables, being uncorrelated, i.e. $\mathrm{Cov}(J(f_k), J(f_j)) = 0$, implies that they are independent. We can therefore compute, for $j \neq j$:
+\[
+\begin{aligned}
+    \mathbb{E}[J(f_k) J(f_j)^*]
+    &= \frac{1}{N} \sum_{n=0}^{N-1} \sum_{m=0}^{N-1} \mathbb{E}[X_n X_m] e^{-i 2\pi k n/N} e^{i 2\pi j m/N}\\
+    &= \frac{\sigma^2}{N} \sum_{n=0}^{N-1} e^{-i 2\pi (k-j) n/N}\\
+    &= 0
+\end{aligned}
+\]
+Which is enough to prove that $J(f_k)$ and $J(f_j)$ are independent. This implies that $|J(f_k)|^2$ and $|J(f_j)|^2$ are also independent.
+We can thus explain the erratic behavior of the periodogram observed in Question~\ref{ex:wn-exp} by the fact that each periodogram estimate $|J(f_k)|^2$ has a constant variance $\sigma^4$, which does not decrease with $N$.
+Moreover, the estimate at $f_k$ being independent of the estimate at $f_j$ for $k \neq j$ means that the value at one frequency does not give any information about the value at another, notably its neighbours. This means that at each frequency we will have high fluctuations independently of its neighbours, resulting in the erratic plot. 
 \end{itemize}
 \end{solution}
+
 
 
 \begin{exercise}\label{q:barlett}
@@ -524,15 +537,15 @@ The variance does not depend on \(N\). Thus, the periodogram \( |J(f_k)|^2 \) is
 \begin{figure}
     \centering
     \begin{minipage}[t]{0.3\textwidth}
-    \centerline{\includegraphics[width=\textwidth]{example-image-golden}}
+    \centerline{\includegraphics[width=\textwidth]{figures/Bartlett_N200.png}}
     \centerline{Periodogram ($N=200$)}
     \end{minipage}
     \begin{minipage}[t]{0.3\textwidth}
-    \centerline{\includegraphics[width=\textwidth]{example-image-golden}}
+    \centerline{\includegraphics[width=\textwidth]{figures/Bartlett_N500.png}}
     \centerline{Periodogram ($N=500$)}
     \end{minipage}
     \begin{minipage}[t]{0.3\textwidth}
-    \centerline{\includegraphics[width=\textwidth]{example-image-golden}}
+    \centerline{\includegraphics[width=\textwidth]{figures/Bartlett_N1000.png}}
     \centerline{Periodogram ($N=1000$)}
     \end{minipage}
     \vskip1em
@@ -540,6 +553,7 @@ The variance does not depend on \(N\). Thus, the periodogram \( |J(f_k)|^2 \) is
     \label{fig:barlett}
 \end{figure}
 
+The standard deviation obtained using Bartlett's procedure is clearly much smaller than the one obtained in question 6. We have successfully reduced the variance of the estimator by taking the mean of several periodograms. Moreover, notice that the standard deviation is approximately $0.44$, which corresponds to $\frac{1}{\sqrt{5}} \approx 0.447$. The standard deviation been divided by $\sqrt{K}$, where we set $K = 5$, and therefore the variance has indeed been divided by 5.
 \end{solution}
 \section{Data study}
 
