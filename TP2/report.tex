@@ -55,6 +55,51 @@ An estimator $\hat{\theta}_n$ is consistent if it converges in probability when 
 
 \begin{solution}  % ANSWER HERE
 
+\begin{itemize}
+    \item Let $(X_i)_{i\ge 1}$ be i.i.d.\ with mean $\mu$ and variance $\sigma^2<\infty$, and let 
+            $\bar X_n=\frac{1}{n}\sum_{i=1}^n X_i$. Then
+            \[
+            \mathbb{E}[\bar X_n]=\mu,\qquad \mathrm{Var}(\bar X_n)=\frac{\sigma^2}{n}.
+            \]
+            Hence $\bar X_n\to\mu$ in probability and the typical size of the error is 
+            $\sqrt{\mathrm{Var}(\bar X_n)}=\sigma/\sqrt{n}$.
+            Moreover, by the Central Limit Theorem,
+            \[
+            \sqrt{n}(\bar X_n-\mu)\xrightarrow{d}\mathcal{N}(0,\sigma^2),
+            \]
+            so the convergence rate of $\bar X_n$ toward $\mu$ is $n^{-1/2}$.
+    \item  By stationarity, $\mathbb{E}[\bar Y_n]=\mu$. Moreover,
+            \[
+            \mathrm{Var}(\bar Y_n)=\frac{1}{n^2}\sum_{i=1}^n\sum_{j=1}^n \gamma(j-i)
+            = \frac{1}{n}\Big(\gamma(0)+2\sum_{k=1}^{n-1}\Big(1-\frac{k}{n}\Big)\gamma(k)\Big).
+            \]
+            Let $A_n:=\gamma(0)+2\sum_{k=1}^{n-1}(1-\tfrac{k}{n})\gamma(k)$; we show $A_n\to A<\infty$.
+
+            Since $\sum_{k=-\infty}^{\infty}|\gamma(k)|<\infty$, in particular $\sum_{k=1}^{\infty}|\gamma(k)|<\infty$.  
+            Hence for any $\varepsilon>0$, there exists $K\in\mathbb{N}$ such that
+            \[
+            \sum_{k=K+1}^{\infty}|\gamma(k)|<\varepsilon.
+            \]
+            Then, for all $n$,
+            \[
+            \sum_{k=1}^{n-1}\Big(1-\frac{k}{n}\Big)\gamma(k)
+            =
+            \sum_{k=1}^{K}\Big(1-\frac{k}{n}\Big)\gamma(k)
+            +\sum_{k=K+1}^{n-1}\Big(1-\frac{k}{n}\Big)\gamma(k).
+            \]
+            The first finite sum converges to $\sum_{k=1}^{K}\gamma(k)$ by dominated convergence (since $|1-k/n|\le1$).  
+            For the tail,
+            \[
+            \Big|\sum_{k=K+1}^{n-1}(1-\tfrac{k}{n})\gamma(k)\Big|
+            \le \sum_{k=K+1}^{\infty}|\gamma(k)|<\varepsilon.
+            \]
+            Thus the whole sum converges to $\sum_{k=1}^{\infty}\gamma(k)$, and
+            \[
+            A_n \xrightarrow[n\to\infty]{} A:=\gamma(0)+2\sum_{k=1}^{\infty}\gamma(k)<\infty.
+            \]
+            Therefore $\mathrm{Var}(\bar Y_n)\sim \frac{A}{n}$, which implies $\mathrm{Var}(\bar Y_n)\to 0$ and hence $\bar Y_n \xrightarrow{\mathbb{P}}\mu$, with rate $n^{-1/2}$ as in the i.i.d.\ case.
+
+\end{itemize}
 
 \end{solution}
 
@@ -80,6 +125,61 @@ Wold's theorem states that any weakly stationary process can be written as the s
 \end{exercise}
 
 \begin{solution}  % ANSWER HERE
+   
+\begin{itemize}
+  \item  Since the series converges in $L^2$ and $\mathbb{E}[\varepsilon_t]=0$,
+  \[
+    \mathbb{E}[Y_t] 
+    = \mathbb{E}\Big[\sum_{k=0}^{\infty} \psi_k \varepsilon_{t-k}\Big]
+    = \sum_{k=0}^{\infty} \psi_k \mathbb{E}[\varepsilon_{t-k}] = 0.
+  \]
+  For $h\in\mathbb{Z}$,
+  \[
+  \mathbb{E}[Y_t Y_{t-h}]
+  = \mathbb{E}\Big[\sum_{j=0}^{\infty} \psi_j \varepsilon_{t-j}
+                  \sum_{m=0}^{\infty} \psi_m \varepsilon_{t-h-m}\Big]
+  = \sum_{j,m\ge 0} \psi_j \psi_m \mathbb{E}[\varepsilon_{t-j}\varepsilon_{t-h-m}].
+  \]
+  By whiteness, $\mathbb{E}[\varepsilon_{t-j}\varepsilon_{t-h-m}]
+  = \sigma_\varepsilon^2 \mathbf{1}_{\{t-j=t-h-m\}}$, i.e.\ nonzero only if $m=j-h$.
+  Using the convention $\psi_k=0$ for $k<0$, we obtain
+  \[
+    \gamma_Y(h) := \mathbb{E}[Y_t Y_{t-h}]
+    = \sigma_\varepsilon^2 \sum_{j=0}^{\infty} \psi_j \psi_{j-h},
+  \]
+  which depends only on the lag $h$. Moreover, by Cauchy--Schwarz,
+  \[
+    \sum_{j=0}^{\infty}|\psi_j \psi_{j-h}|
+    \le \Big(\sum_{j=0}^{\infty}\psi_j^2\Big)^{1/2}
+         \Big(\sum_{j=0}^{\infty}\psi_{j-h}^2\Big)^{1/2}
+    = \sum_{j=0}^{\infty}\psi_j^2 < \infty,
+  \]
+  so $\gamma_Y(h)$ is finite for all $h$. Hence $(Y_t)_t$ is weakly stationary with mean $0$ and autocovariance $\gamma_Y(h)$.
+
+  \item The spectral density is the Fourier series of $\gamma_Y(h)$:
+  \[
+    S(f) = \sum_{h=-\infty}^{\infty} \gamma_Y(h) e^{-2\pi i f h}, 
+    \qquad f\in[-\tfrac{1}{2},\tfrac{1}{2}].
+  \]
+  Using $\gamma_Y(h)=\sigma_\varepsilon^2 \sum_{j\ge 0} \psi_j \psi_{j-h}$ and absolute convergence
+  (from $\sum_k \psi_k^2<\infty$), we can interchange the sums:
+  \[
+    S(f)
+    = \sigma_\varepsilon^2 \sum_{h=-\infty}^{\infty}\sum_{j=0}^{\infty} 
+        \psi_j \psi_{j-h} e^{-2\pi i f h}
+    = \sigma_\varepsilon^2 \sum_{j,m\ge 0} \psi_j \psi_m e^{-2\pi i f (j-m)},
+  \]
+  where we set $m=j-h$. Thus
+  \[
+    S(f)
+    = \sigma_\varepsilon^2 
+      \Big(\sum_{j\ge 0} \psi_j e^{-2\pi i f j}\Big)
+      \Big(\sum_{m\ge 0} \psi_m e^{2\pi i f m}\Big)
+    = \sigma_\varepsilon^2 \big|\varphi(e^{-2\pi i f})\big|^2,
+  \]
+  where $\varphi(z)=\sum_{j=0}^{\infty} \psi_j z^j$.
+\end{itemize}
+
 
 \end{solution}
 
