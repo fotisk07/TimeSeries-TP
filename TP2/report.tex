@@ -5,8 +5,8 @@
 % Document title
 \title{Assignment 2 (ML for TS) - MVA}
 \author{
-Firstname Lastname \email{youremail1@mail.com} \\ % student 1
-Firstname Lastname \email{youremail2@mail.com} % student 2
+Adonis Jamal \email{adonis.jamal@student-cs.fr} \\
+Fotios Kapotos \email{fotiskapotos@mail.com}
 }
 
 \begin{document}
@@ -215,27 +215,34 @@ Properties on the roots of this polynomial drive the behavior of this process.
     \end{minipage}
     \caption{Two AR(2) processes}\label{fig:q-ar-2-corr}
 \end{figure}
-
-
-
 \end{exercise}
 
-\begin{solution}  % ANSWER HERE
+
+
+\begin{solution}
+  \begin{itemize}
+    \item \textbf{Autocovariance coefficients:} Assuming that $Y_1$ and $Y_2$ are centered, $k \geq 0$, we have $$Y_t Y_{t-k} = \phi_1 Y_{t-1} Y_{t-k} + \phi_2 Y_{t-2} Y_{t-k} + \varepsilon_t Y_{t-k}.$$ Taking the expectation and using the fact that $\varepsilon_t$ is independent of $Y_{t-k}$ for $k>0$, we get: $$\gamma(k) = \phi_1 \gamma(k-1) + \phi_2 \gamma(k-2).$$
+    The characteristic polynomial associated to this linear recurrence relation is the same as the one of the AR(2) process, i.e. $\phi(z) = 1 - \phi_1 z - \phi_2 z^2$. Thus, the general solution of this recurrence relation is given by $$\gamma(k) = A r_1^{-k} + B r_2^{-k},$$ where $A$ and $B$ are constants determined by initial conditions $\gamma(0)$ and $\gamma(1)$.
+    \item \textbf{Correlograms:} The first AR(2) process has complex roots, as we can see from the oscillatory behavior of its correlogram. The second AR(2) process has real roots, as its correlogram decays exponentially without oscillations. We can prove this by setting $r_{1,2} = \rho e^{\pm i \theta}$, with $\rho > 1$ and $\theta \in (0, \pi)$. Then, we have $r_{1,2}^{-k} = \rho^{-k} e^{\mp i k \theta}$, and thus $$\gamma(k) = \rho^{-k} (C \cos(k \theta) + D \sin(k \theta))$$ for some constants $C, D \in \mathbb{C}$. This expression shows the oscillatory nature of the autocovariance function when the roots are complex.
+    \item \textbf{Power spectrum:} We introduce a lag operator $L$ such that $L Y_t = Y_{t-1}$. The AR(2) process can be rewritten as $$\phi(L) Y_t = \varepsilon_t$$ where $\phi(L) = 1 - \phi_1 L - \phi_2 L^2$. We can express $\phi(L)$ as $$\phi(L) = \left(1 - \frac{L}{r_1}\right)\left(1 - \frac{L}{r_2}\right).$$ Since $|r_i| > 1$, we can rewrite the process as $$Y_t = \frac{1}{\left(1 - \frac{L}{r_1}\right)\left(1 - \frac{L}{r_2}\right)} \varepsilon_t = \varepsilon_t \left(\sum_{k=0}^{\infty} \phi_1^k L^k \right) \left( \sum_{l=0}^{\infty} \phi_2^l L^l \right)$$ using the Taylor expansion. Then, we can express $Y_t$ as an MA($\infty$) process: $$Y_t = \sum_{k=0}^{\infty} \sum_{l=0}^{\infty} \frac{1}{r_1^k r_2^l} \varepsilon_{t - (k + l)} = \sum_{i=0}^{\infty} \sum_{k,l=0}^{i} \frac{1}{r_1^k r_2^l} \varepsilon_{t-i}$$ From the previous question, we know that the power spectrum of an MA($\infty$) process is given by $S(f) = \sigma_\varepsilon^2 |\phi(e^{-2\pi i f})|^{-2}$. Therefore, for our AR(2) process, we have $$S(f) = \frac{\sigma_\varepsilon^2}{|\phi(e^{-2\pi i f})|^{2}}$$
+    \item \textbf{Simulation:} We first find expressions for $\phi_1$ and $\phi_2$ in terms of $r$ and $\theta$. The roots of the characteristic polynomial are given by $r_1 = r e^{i \theta}$ and $r_2 = r e^{-i \theta}$, with $\phi(r_1) = \phi(r_2) = 0$. By expanding the polynomial, we end up with $\phi_1 = \frac{r_1 + r_2}{r_1 r_2}$ and $\phi_2 = -\frac{1}{r_1 r_2}$. Using $r_{1,2} = r e^{\pm i \theta}$, we substitute the values of $r$ and $\theta$ and find $\phi_1 = \frac{2 \cos(2\pi/6)}{1.05} \approx 0.952$ and $\phi_2 = -\frac{1}{1.05^2} \approx -0.907$. We then simulate the AR(2) process with these parameters and plot the signal and its periodogram. Looking at the obtained plots, we observe the oscillations of the signal, which is consistent with the presence of complex roots. The periodogram shows a peak at the frequency $f = 0.17$ Hz, which indicates a dominant frequency component in the signal, corresponding to the oscillatory behavior induced by the complex roots. Using $\theta = \frac{2\pi}{6}$ implies a frequency $f$ verifying $2\pi f = \frac{2\pi}{6}$, which gives $f = \frac{1}{6} \approx 0.167$ Hz, matching the observed peak in the periodogram.
+  \end{itemize}
 
 \begin{figure}
     \centering
     \begin{minipage}[t]{0.45\textwidth}
-    \centerline{\includegraphics[width=\textwidth]{example-image-golden}}
+    \centerline{\includegraphics[width=\textwidth]{images/AR2_signal.png}}
     \centerline{Signal}
     \end{minipage}
     \hfill
-    \begin{minipage}[t]{0.45\textwidth}    \centerline{\includegraphics[width=\textwidth]{example-image-golden}}
+    \begin{minipage}[t]{0.45\textwidth}    \centerline{\includegraphics[width=\textwidth]{images/AR2_periodogram.png}}
     \centerline{Periodogram}
     \end{minipage}
     \caption{AR(2) process}\label{fig:q-ar-2}
 \end{figure}
-
 \end{solution}
+
+
 
 \newpage
 \section{Sparse coding}
