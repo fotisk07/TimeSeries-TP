@@ -1,0 +1,43 @@
+\section{Wavelet transform for graph signals}
+Let $G$ be a graph defined a set of $n$ nodes $V$ and a set of edges $E$. A specific node is denoted by $v$ and a specific edge, by $e$.
+The eigenvalues and eigenvectors of the graph Laplacian $L$ are $\lambda_1\leq\lambda_2\leq\dots\leq \lambda_n$ and $u_1$, $u_2$, \dots, $u_n$ respectively.
+
+For a signal $f\in\RR^{n}$, the Graph Wavelet Transform (GWT) of $f$ is $ W_f: \{1,\dots,M\}\times V \longrightarrow \RR$:
+\begin{equation}
+    W_f(m, v) := \sum_{l=1}^n \hat{g}_m(\lambda_l)\hat{f}_l u_l(v)
+\end{equation}
+where $\hat{f}= [\hat{f}_1,\dots,\hat{f}_n]$ is the Fourier transform of $f$ and $\hat{g}_m$ are $M$ kernel functions.
+The number $M$ of scales is a user-defined parameter and is set to $M:=9$ in the following.
+Several designs are available for the $\hat{g}_m$; here, we use the Spectrum Adapted Graph Wavelets (SAGW).
+Formally, each kernel $\hat{g}_m$ is such that
+\begin{equation}
+    \hat{g}_m(\lambda) := \hat{g}^U(\lambda - am) \quad (0\leq\lambda\leq\lambda_n)
+\end{equation}
+where $a:=\lambda_n / (M+1-R)$,
+\begin{equation}
+    \hat{g}^U(\lambda) := \frac{1}{2}\left[ 1 + \cos\left( 2\pi\left(\frac{\lambda}{a R}  + \frac{1}{2} \right)\right) \right]\one(-Ra \leq \lambda < 0)
+\end{equation}
+and $R>0$ is defined by the user.
+
+\begin{exercise}
+Plot the kernel functions $\hat{g}_m$ for $R=1$, $R=3$ and $R=5$ (take $\lambda_n=12$) on Figure~\ref{fig:sagw-kernels}. What is the influence of $R$?
+\end{exercise}
+
+\begin{solution}
+\begin{figure}
+    \centering
+    \begin{minipage}[t]{0.32\textwidth}
+    \centerline{\includegraphics[width=\textwidth]{example-image-golden}}
+    \centerline{(a) $R=1$}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.32\textwidth}    \centerline{\includegraphics[width=\textwidth]{example-image-golden}}
+    \centerline{(b) $R=3$}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.32\textwidth}    \centerline{\includegraphics[width=\textwidth]{example-image-golden}}
+    \centerline{(c) $R=5$}
+    \end{minipage}
+    \caption{The SAGW kernels functions}\label{fig:sagw-kernels}
+\end{figure}
+\end{solution}

@@ -1,0 +1,51 @@
+\section{Node frequency classification}
+
+For each node $v$, we use
+\[
+[W_f(1,v),\dots,W_f(M,v)]
+\]
+as features.
+
+Nodes are classified as:
+low (scales 1--3), medium (4--6), high (7--9) frequency.
+
+\begin{exercise}
+Apply this classification to:
+least smooth signal, smoothest signal, first timestamp.
+Display results on the map.
+\end{exercise}
+
+\begin{solution}
+\begin{figure}
+\centering
+\begin{minipage}[t]{0.45\textwidth}
+\includegraphics[width=\textwidth]{example-image-golden}
+\centerline{(a) Least smooth}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\includegraphics[width=\textwidth]{example-image-golden}
+\centerline{(b) Smoothest}
+\end{minipage}
+
+\vskip1em
+
+\begin{minipage}[t]{0.45\textwidth}
+\includegraphics[width=\textwidth]{example-image-golden}
+\centerline{(c) First timestamp}
+\end{minipage}
+\caption{Node frequency classification}
+\label{fig:node-classif}
+\end{figure}
+\end{solution}
+
+\begin{exercise}
+Display average temperature with marker colours equal to the majority class.
+\end{exercise}
+
+\begin{solution}
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{example-image-golden}
+\caption{Average temperature with majority frequency class}
+\end{figure}
+\end{solution}
