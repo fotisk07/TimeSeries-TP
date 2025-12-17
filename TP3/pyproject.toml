@@ -8,7 +8,9 @@ dependencies = [
     "contextily>=1.7.0",
     "geopandas>=1.1.1",
     "loadmydata>=0.0.11",
+    "networkx>=3.4.2",
     "pygsp>=0.6.1",
+    "python-levenshtein>=0.27.3",
     "ruptures>=1.1.10",
     "scipy>=1.15.3",
 ]

@@ -24,20 +24,20 @@ Plot the kernel functions $\hat{g}_m$ for $R=1$, $R=3$ and $R=5$ (take $\lambda_
 \end{exercise}
 
 \begin{solution}
-\begin{figure}
+The parameter \(R\) directly controls the spectral support of each kernel, which is
+\[
+\mathrm{supp}(\hat g_m) = [a_m - Ra,\, a_m).
+\]
+As \(R\) increases, the kernels become wider in the spectral domain, leading to stronger
+overlap between adjacent scales and smoother frequency coverage.
+Conversely, smaller values of \(R\) produce narrower kernels with reduced overlap,
+resulting in a more localized and selective spectral tiling.
+\begin{figure}[h]
     \centering
-    \begin{minipage}[t]{0.32\textwidth}
-    \centerline{\includegraphics[width=\textwidth]{example-image-golden}}
-    \centerline{(a) $R=1$}
-    \end{minipage}
-    \hfill
-    \begin{minipage}[t]{0.32\textwidth}    \centerline{\includegraphics[width=\textwidth]{example-image-golden}}
-    \centerline{(b) $R=3$}
-    \end{minipage}
-    \hfill
-    \begin{minipage}[t]{0.32\textwidth}    \centerline{\includegraphics[width=\textwidth]{example-image-golden}}
-    \centerline{(c) $R=5$}
-    \end{minipage}
-    \caption{The SAGW kernels functions}\label{fig:sagw-kernels}
+    \includegraphics[width=\textwidth]{../figures/sagw_kernels.png}
+    \caption{Spectrum Adapted Graph Wavelet kernels \(\hat g_m(\lambda)\) for
+    \(M=9\), \(\lambda_n=12\), and different values of the overlap parameter \(R\).
+    Each curve corresponds to one scale \(m\).}
+    \label{fig:sagw_kernels}
 \end{figure}
 \end{solution}
