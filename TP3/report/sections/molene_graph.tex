@@ -1,13 +1,15 @@
 \section{Molene temperature graph}
 
-We study the Molene dataset using temperature signals.
+We will study the Molene data set (the one we used in the last tutorial).
+The signal is the temperature.
 
 \begin{exercise}
-Construct the graph using distance-based exponential smoothing.
+Construct the graph using the distance matrix and exponential smoothing (use the median heuristics for the bandwidth parameter). 
 \begin{itemize}
-    \item Remove stations with missing values.
-    \item Choose the minimum threshold ensuring connectivity and average degree $\ge 3$.
-    \item Identify the least smooth and smoothest timestamps.
+    \item Remove all stations with missing values in the temperature.
+    \item Choose the minimum threshold so that the network is connected and the average degree is at least 3.
+    \item What is the time where the signal is the least smooth?
+    \item What is the time where the signal is the smoothest?
 \end{itemize}
 \end{exercise}
 
@@ -18,9 +20,9 @@ LANDIVISIAU, LANNAERO, LANVEOC, OUESSANT-STIFF,
 PLOUAY-SA, PLOUDALMEZEAU, PLOUGONVELIN, QUIMPER,
 RIEC-SUR-BELON, SIZUN, ST-NAZAIRE-MONTOIR, and VANNES-MEUCON.
 
-The threshold is 0.77 (using Lambert II étendu)
+The threshold is equal to 0.83 (using Lambert II étendu)
 
-The least smooth signal occurs at 2014-01-21 06:00:00
+The least smooth signal occurs at 2014-01-10 09:00:00
 
 The smoothest signal occurs at 2014-01-24 19:00:00
 \end{solution}
